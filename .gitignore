@@ -1,0 +1,6 @@
+# virtual environment and caching
+/__pycache__
+/.venv
+
+# files uploaded to the server
+/uploads/**

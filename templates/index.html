@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bencode Parser</title>
+</head>
+<body>
+    <h1>Bencode Parser</h1>
+    <form id="parser-form" enctype="multipart/form-data">
+        <label for="file_path">Bencoded File:</label>
+        <input type="file" name="file_path" accept=".torrent" required>
+        <input type="checkbox" name="print_output"> Print Output to Console
+        <button type="button" onclick="parseBencode()">Parse Bencode</button>
+    </form>
+    <div id="output" style="width: 50%""></div>
+    <script>
+        function parseBencode() {
+            const form = document.getElementById('parser-form');
+            const formData = new FormData(form);
+
+            fetch('/parse', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                const outputDiv = document.getElementById('output');
+                outputDiv.innerHTML = '<h2>Parsed JSON:</h2><pre style="white-space: pre-wrap !important;">' + JSON.stringify(data, null, 4) + '</pre>';
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
